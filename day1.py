@@ -5,6 +5,8 @@ dd=[re.sub('\n','',i) for i in dd]
 dd=[int(s[0] +s[-1]) for s in dd]
 print(sum(dd))
 
+# Star 2 #
+
 digits = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
 starts=[]
