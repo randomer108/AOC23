@@ -8,6 +8,17 @@ seeds = str.split(re.sub('seeds: ','',data[0]),' ')
 seeds=[int(x) for x in seeds]
 data.pop(0);data.pop(0)
 
+class seed:
+    def __init__(self,number):
+        self.value=number
+        self.type='seed'
+        self.soil=int()
+        self.fertilizer=int()
+        self.water=int()
+        self.light=int()
+        self.temperature=int()
+        self.humidity=int()
+        self.location=int()
 
 
 class map:
@@ -20,6 +31,8 @@ class map:
         line = [int(x) for x in line]
         #[source_start, destination_start, length]
         self.range_data.append(line)
+
+    #def scan_range_data(self,seed)
 
 # Read in the fucking maps! This was outragously difficult to get working.
 current_map=None; Maps=[]
@@ -36,5 +49,4 @@ for line in data:
 
 # 
 print(Maps[3].range_data[1][0])
-
 #Headings = [bool(re.search('[A-z]',data[i])) for i in range(len(data))]
