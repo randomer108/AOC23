@@ -38,7 +38,6 @@ print(sum(range(1,101))-sum(games_nani)) # Hacky - sum 1:101 is the sum of all g
 
 # Star 2 #
 
-# Counts for each colour in each game from challenge
 games_power =[]
 
 def get_cube_num(inp):
