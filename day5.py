@@ -87,7 +87,7 @@ print('Minimum location is: ' +str(Answer))
 
 # 2 # 
 
-all_the_seed_ranges = [range(seeds[i*2],seeds[i*2]+seeds[i*2+1]) for i in range(2)]
+all_the_seed_ranges = [range(seeds[i*2],seeds[i*2]+seeds[i*2+1]) for i in range(10)] #<< manual
 print(all_the_seed_ranges)
 
 
