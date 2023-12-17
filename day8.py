@@ -66,8 +66,9 @@ def part2():
 
         finished = check_nodes(Nodes)  # check if finished
 
-        """ i+=1   # tick up index counter
+        i+=1   # tick up index counter
         answer2+=1 # tick up answer
+        """
         if answer2>100000:  # excape while
             print('This is taking too long')
             break """
