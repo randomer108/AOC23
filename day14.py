@@ -38,6 +38,7 @@ Height = len(data1)
 for i in range(len(data1)):
     answer+=len([x for x in data1[i] if x=='O'])*(Height-i)
 
+print('# 1 #')
 print(answer)
 
 
@@ -65,7 +66,6 @@ def south(data):
 
         data[:,j] =col
     return data
-
 
 def west(data):
     for i in range(len(data)):
@@ -107,7 +107,6 @@ def east(data):
         data[i] =col
     return data
 
-
 def cycle(data):
     data=north(data)
     data=west(data)
@@ -117,24 +116,44 @@ def cycle(data):
 
 data_out=data_raw.copy()
 
+# by printing the answer at each iteration for 1000 cycles or so, I spotted cycling in the answers. So now I'll search for cycling!
+# Track states of the board
+States=[] 
+flag=False
 
-for i in range(1000000000):
-    data_in = data_out.copy()
+for i in range(1000000):
     data_out=cycle(data_out)
-    if np.array_equal(data_in,data_out):
+    for k in range(len(States)):
+        if np.array_equal(States[k],data_out):
+            flag=True
+            First_repeat=i
+            Repeated=k
+            break 
+    States.append(data_out.copy())
+    if flag:
         break
 
-# answer
-answer=0
-Height = len(data_out)
-for i in range(len(data_out)):
-    answer+=len([x for x in data_out[i] if x=='O'])*(Height-i) 
 
-print(answer)
-""" print(data_raw)
-print(data_out)
-print(np.array_equal(data_raw,data_out))
- """
+
+correct_number_cycles=             Repeated +                           (1_000_000_000-First_repeat)%(First_repeat-Repeated)
+#                     ^^ do these to hit start of cycling^^    ^^ do this many cycles to go far enough into the pattern to find the same state as state state 1_000_000_000
+
+print('# 2 #')
+print(f"The first repeat is {First_repeat} and it repeats state {Repeated}  so the loop length is {First_repeat-Repeated}")
+print(f"We need to run it {Repeated} times to hit the start of the cycle. Then we run it {(1_000_000_000-First_repeat)%(First_repeat-Repeated)} times, which is 1_000_000_000 % cycle length")
+# Now cycle the raw data that many times!
+data_final = data_raw.copy()
+
+for i in range(correct_number_cycles):
+    data_final=cycle(data_final)
+
+answer2=0
+Height = len(data_final)
+for i in range(len(data_final)):
+    answer2+=len([x for x in data_final[i] if x=='O'])*(Height-i)
+
+print(answer2)
+
 
 
 
