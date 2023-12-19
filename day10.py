@@ -105,28 +105,26 @@ pipe=set(pipe)
 insides=0
 
 
-point = set((46,53))
 
 for X in range(len(data)):
     for Y in range(len(data[0])):
         point = (X,Y)
         if point in pipe:
             continue
-        
-        SYMBOL = data[X,Y] # need this
 
         # Maye a ray to the side
         rayE=[(x,point[1]) for x in range(point[0])]
-       
         # See how many times it crosses the pipe
+
+        rayE.reverse()
 
         crash=False # currenty in the pipe?
         crosses=0 # number of changes of <pipe to ¬pipe> or vice versa.
 
         for point in rayE:
-            if point in pipe and SYMBOL=='-':
+            if point in pipe and point=='-':
                     continue
-            if point in pipe and SYMBOL!='-':
+            if point in pipe and point!='-':
                     if crash == False:
                         crash=True
                         crosses+=1
@@ -144,5 +142,3 @@ for X in range(len(data)):
             insides+=1
 
 print(insides)
-
-

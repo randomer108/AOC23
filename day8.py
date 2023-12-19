@@ -19,7 +19,7 @@ leftsRights=[[d[1],d[2]] for d in data]
 
 
 # logic
-""" node = 'AAA'
+node = 'AAA'
 answer=0
 i=0
 while node !='ZZZ':
@@ -35,7 +35,7 @@ while node !='ZZZ':
         break
 
 print(node)
-print(answer) """
+print(answer)
 
 # 2 # 
 
