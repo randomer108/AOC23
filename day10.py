@@ -3,20 +3,20 @@ import numpy as np
 import math as m
 import timeit
 
-data = open("./AOC23/data/day10.txt").readlines()
+data = open("./data/day10.txt").readlines()
 data = np.array([list(line.strip()) for line in data])      
 
 
 class pointer:
-    def __init__(self,y,x,symbol,direction):
-        self.x=x
-        self.y=y
+    def __init__(self,row,col,symbol,direction):
+        self.row=row
+        self.col=col
         self.next_symbol=symbol
         self.current_direction=direction
 
     def read(self):
 
-        self.next_symbol=data[self.y,self.x]
+        self.next_symbol=data[self.row,self.col]
 
         if self.next_symbol=='-' and self.current_direction == 'R':
             self.current_direction == 'R'
@@ -60,13 +60,13 @@ class pointer:
             return
     def move(self):
         if self.current_direction=='R':
-            self.x+=1
+            self.col+=1
         elif self.current_direction=='L':
-            self.x-=1
+            self.col-=1
         elif self.current_direction=='U':
-            self.y-=1
+            self.row-=1
         elif self.current_direction=='D':
-            self.y+=1   
+            self.row+=1   
 
 
 # Take start and initialise pointers
@@ -80,21 +80,21 @@ pointer2.move()
 
 pipe=[(Start[0][0],Start[1][0])] # part 2
 
-print(data)
+#print(data)
 i=1
-while abs(pointer1.x-pointer2.x) + abs(pointer1.y-pointer2.y)>1:
+while abs(pointer1.row-pointer2.row) + abs(pointer1.col-pointer2.col)>1:
     pointer1.read()
     pointer1.move()
-    pipe.append((pointer1.x,pointer1.y))
+    pipe.append((pointer1.row,pointer1.col))
 
     pointer2.read()
     pointer2.move()
-    pipe.append((pointer2.x,pointer2.y))
+    pipe.append((pointer2.row,pointer2.col))
     i+=1
     if i>10000: break
     
 print("done " + str(i+1))
-
+#print(pipe)
 # 2 #
 # What's inside? 
 # Well drawing a ray from any point to the outer edge - it must cross [0,2,4,6,8...] if it's OUTSIDE, and [1,3,5,7,9,...] if it's inside.
@@ -104,39 +104,36 @@ print("done " + str(i+1))
 pipe=set(pipe)
 insides=0
 
-
-
-for X in range(len(data)):
-    for Y in range(len(data[0])):
-        point = (X,Y)
+for ROW in range(len(data)):
+    for COL in range(len(data[0])):
+        point = (ROW,COL)
         if point in pipe:
             continue
-
         # Maye a ray to the side
-        rayE=[(x,point[1]) for x in range(point[0])]
+        rayE=[(point[0],cols) for cols in range(point[1])]
         # See how many times it crosses the pipe
-
-        rayE.reverse()
-
+        
+        #rayE.reverse()
         crash=False # currenty in the pipe?
         crosses=0 # number of changes of <pipe to ¬pipe> or vice versa.
 
-        for point in rayE:
-            if point in pipe and point=='-':
-                    continue
-            if point in pipe and point!='-':
-                    if crash == False:
-                        crash=True
-                        crosses+=1
-                    if crash==True:
-                        continue
+        for step in rayE:
+            symbol=data[step[0],step[1]] 
+            if step in pipe and symbol=='-':
+                    pass
+            if step in pipe and symbol!='-':
+                    #if crash == False:
+                    #    crash=True
+                    crosses+=1
+                    #if crash==True:
+                    #    pass
 
-            if point not in pipe:
+            """ if step not in pipe:
                 if crash==True:
                     crash=False
                     crosses+=1
                 if crash==False:
-                    continue
+                    pass """
 
         if crosses %2!=0:
             insides+=1
